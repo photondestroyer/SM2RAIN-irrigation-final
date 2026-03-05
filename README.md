@@ -1,13 +1,13 @@
 # SM2RAIN Irrigation Detection algorithm
 
 
-## Overview
+## Summary
 
 This project implements the SM2RAIN algorithm for detecting irrigation from satellite soil moisture observations. The methodology inverts the soil water balance equation to estimate total water input (precipitation plus irrigation) from observed changes in satellite-derived soil moisture. Irrigation is then isolated as the positive residual between the SM2RAIN-estimated total water input and a satellite rainfall reference.
 
-The SM2RAIN algorithm is implemented for 11 years: 2015 - 2025.
+The framework is implemented for the Ludhiana agricultural region (Punjab, India), one of the most intensively irrigated regions globally, using SMAP soil moisture, GPM IMERG precipitation, and Copernicus AgERA5 meteorological data for the period 2015–2025.
 
-The implementation uses a **4-parameter calibration model**:
+This implementation uses a **4-parameter calibration model**:
 
 | Symbol | Parameter | Units |
 |--------|-----------|-------|
@@ -15,8 +15,6 @@ The implementation uses a **4-parameter calibration model**:
 | Ks    | Saturated hydraulic conductivity | mm/day |
 | lambda | Shape parameter for the drainage function | dimensionless |
 | Kc    | Crop coefficient for potential evapotranspiration | dimensionless |
-
-The **exponential filter time constant T** is a user configured (not calibrated) value that smooths near-surface soil moisture observations to approximate root-zone soil moisture. The default value is **T = 5 days**.
 
 ---
 
@@ -139,6 +137,16 @@ Best-parameter results for the Ludhiana study region (per-point strategy, KGE ob
 - "Mean" is the arithmetic mean across all ~25 grid points per class.
 - Kc = 0 across all classes indicates that the Hargreaves PET term does not improve the KGE objective relative to the SM-only water balance terms for this dataset.
 - Class 5 (highest rainfall regime) achieves the highest KGE (0.498), consistent with larger soil moisture responses providing greater discriminating power.
+
+
+## Results 
+<img width="773" height="590" alt="image" src="https://github.com/user-attachments/assets/e37ecb76-6ecf-410e-afaf-cdef4a65f4ea" />
+
+
+
+<img width="1189" height="490" alt="image" src="https://github.com/user-attachments/assets/fb969360-000d-4a5d-9fa1-e36d7c5935ce" />
+
+
 
 
 
