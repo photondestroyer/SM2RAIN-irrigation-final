@@ -20,6 +20,16 @@ The **exponential filter time constant T** is a user configured (not calibrated)
 
 ---
 
+## Data products 
+- Copernicus AgERA5- for day time mean temperature
+  Boogaard, H., Schubert, J., De Wit, A., Lazebnik, J., Hutjes, R., Van der Grijn, G., (2020): Agrometeorological indicators from 1979 to present derived from reanalysis. Copernicus Climate Change Service (C3S) Climate Data Store (CDS). DOI: 10.24381/cds.6c68c9bb
+  
+- GPM IMERG Final Run V07 (GPM_3IMERGHH) - for precipitation values
+  Huffman, G.J., E.F. Stocker, D.T. Bolvin, E.J. Nelkin, Jackson Tan (2023), GPM IMERG Final Precipitation L3 Half Hourly 0.1 degree x 0.1 degree V07, Greenbelt, MD, Goddard Earth Sciences Data and Information Services Center (GES DISC), 10.5067/GPM/IMERG/3B-HH/07
+  
+- NASA SMAP (SPL3SMP_E) - for SM values
+  O’Neill, P. E., S. Chan, E. G. Njoku, T. Jackson, R. Bindlish, & J. Chaubell. (2021). SMAP L3 Radiometer Global Daily 36 km EASE-Grid Soil Moisture, Version 8 [Data Set]. Boulder, Colorado USA: NASA National Snow and Ice Data Center Distributed Active Archive Center. https://doi.org/10.5067/OMHVSRGFX38O.
+
 ## Theoretical Background
 
 ### Soil Water Balance Equation
@@ -80,10 +90,7 @@ I(t) = max(0, P_SM2RAIN(t) - P_ref(t))
 Events below a minimum threshold (default 2.5 mm/day) are discarded as noise.
 
 ---
-## Data products used
-- Copernicus AgERA5- for day time mean temperature
-- NASA IMERG Final Run V7 - for precipitation values
-- NASA SMAP - SPL3SMP_E - for SM values 
+
 
 ## Calibration Methodology
 
@@ -110,20 +117,6 @@ For each of the 5 classes, parameters (Z\*, Ks, lambda, Kc) are optimised by min
 ### Step 4 - Best-Parameter Selection
 
 The best parameter set for each class is the one that achieves the lowest loss value on the primary objective (KGE-based loss). Both RMSE and KGE are reported for each grid point and each class to enable comparison.
-
-
-## Parameters and Bounds
-
-### Calibrated Parameters
-
-| Parameter | Symbol | Units | Optimisation Bounds | Description |
-|-----------|--------|-------|---------------------|-------------|
-| Effective soil depth | Z* | mm | [0.001, 100] | Depth of soil layer contributing to SM observations |
-| Saturated hydraulic conductivity | Ks | mm/day | [0.001, 50] | Maximum drainage rate |
-| Drainage shape parameter | lambda | - | [3.0, 15.0] | Controls nonlinearity of drainage term |
-| Crop coefficient | Kc | - | [0.001, 25] | Scales PET to actual ET |
-
----
 
 
 ## Calibration Results
