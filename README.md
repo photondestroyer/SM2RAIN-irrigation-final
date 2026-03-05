@@ -21,14 +21,17 @@ The **exponential filter time constant T** is a user configured (not calibrated)
 ---
 
 ## Data products 
-- Copernicus AgERA5- for day time mean temperature
-  Boogaard, H., Schubert, J., De Wit, A., Lazebnik, J., Hutjes, R., Van der Grijn, G., (2020): Agrometeorological indicators from 1979 to present derived from reanalysis. Copernicus Climate Change Service (C3S) Climate Data Store (CDS). DOI: 10.24381/cds.6c68c9bb
+#### Copernicus AgERA5 (Daytime Mean Temperature)
+
+Boogaard, H., Schubert, J., De Wit, A., Lazebnik, J., Hutjes, R., & Van der Grijn, G. (2020). Agrometeorological indicators from 1979 to present derived from reanalysis (AgERA5). Copernicus Climate Change Service (C3S) Climate Data Store (CDS). https://doi.org/10.24381/cds.6c68c9bb
   
-- GPM IMERG Final Run V07 (GPM_3IMERGHH) - for precipitation values
-  Huffman, G.J., E.F. Stocker, D.T. Bolvin, E.J. Nelkin, Jackson Tan (2023), GPM IMERG Final Precipitation L3 Half Hourly 0.1 degree x 0.1 degree V07, Greenbelt, MD, Goddard Earth Sciences Data and Information Services Center (GES DISC), 10.5067/GPM/IMERG/3B-HH/07
+#### GPM IMERG Final Run V07 (Precipitation)
+
+Huffman, G. J., Stocker, E. F., Bolvin, D. T., Nelkin, E. J., & Tan, J. (2023). GPM IMERG Final Precipitation L3 Half Hourly 0.1° × 0.1° (GPM_3IMERGHH), Version 07. NASA Goddard Earth Sciences Data and Information Services Center (GES DISC). https://doi.org/10.5067/GPM/IMERG/3B-HH/07
   
-- NASA SMAP (SPL3SMP_E) - for SM values
-  O’Neill, P. E., S. Chan, E. G. Njoku, T. Jackson, R. Bindlish, & J. Chaubell. (2021). SMAP L3 Radiometer Global Daily 36 km EASE-Grid Soil Moisture, Version 8 [Data Set]. Boulder, Colorado USA: NASA National Snow and Ice Data Center Distributed Active Archive Center. https://doi.org/10.5067/OMHVSRGFX38O.
+#### NASA SMAP (Soil Moisture)
+
+O’Neill, P. E., Chan, S., Njoku, E. G., Jackson, T., Bindlish, R., & Chaubell, J. (2021). SMAP L3 Radiometer Global Daily 36 km EASE-Grid Soil Moisture (SPL3SMP_E), Version 8. NASA National Snow and Ice Data Center Distributed Active Archive Center (NSIDC DAAC). https://doi.org/10.5067/OMHVSRGFX38O
 
 ## Theoretical Background
 
