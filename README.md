@@ -5,6 +5,8 @@
 
 This project implements the SM2RAIN algorithm for detecting irrigation from satellite soil moisture observations. The methodology inverts the soil water balance equation to estimate total water input (precipitation plus irrigation) from observed changes in satellite-derived soil moisture. Irrigation is then isolated as the positive residual between the SM2RAIN-estimated total water input and a satellite rainfall reference.
 
+The SM2RAIN algorithm is implemented for 11 years: 2015 - 2025.
+
 The implementation uses a **4-parameter calibration model**:
 
 | Symbol | Parameter | Units |
@@ -14,7 +16,7 @@ The implementation uses a **4-parameter calibration model**:
 | lambda | Shape parameter for the drainage function | dimensionless |
 | Kc    | Crop coefficient for potential evapotranspiration | dimensionless |
 
-The **exponential filter time constant T** is a user-configured constant (not calibrated) that smooths near-surface soil moisture observations to approximate root-zone soil moisture. The default value is **T = 5 days**.
+The **exponential filter time constant T** is a user configured (not calibrated) value that smooths near-surface soil moisture observations to approximate root-zone soil moisture. The default value is **T = 5 days**.
 
 ---
 
@@ -65,28 +67,7 @@ where `Ta` is daily mean air temperature [degrees C] and `Ra` is date- and latit
 Ra = (24*60/pi) * Gsc * dr * [omega_s * sin(phi)*sin(delta) + cos(phi)*cos(delta)*sin(omega_s)] * 0.408
 ```
 
-with `Gsc = 0.0820` MJ/(m^2 min), `dr` the inverse relative Earth-Sun distance, `delta` solar declination, `omega_s` sunset hour angle, and `phi` the station latitude in radians. This replaces the static Blaney-Criddle formulation used in earlier versions.
-
-### Exponential Filter
-
-Near-surface satellite soil moisture (representative of approximately 0-5 cm) is converted to a root-zone soil moisture proxy using an exponential filter (Wagner et al., 1999):
-
-```
-SWI(t) = SWI(t-1) + K * [SM(t) - SWI(t-1)]
-K = 1 / (1 + T/dt)
-```
-
-where SWI is the Soil Water Index, SM is the surface soil moisture observation, `dt` is the time step (1 day), and `T` is the characteristic time length [days]. A larger `T` corresponds to a deeper, slower-responding soil layer.
-
-### Soil Moisture Normalization
-
-Raw volumetric soil moisture observations are normalized to a relative wetness index S in [0, 1]:
-
-```
-S(t) = (theta(t) - theta_min) / (theta_max - theta_min)
-```
-
-where `theta_min` and `theta_max` are derived from the **full available SMAP time series** at each grid point (not only the calibration sub-period), ensuring that S = 0 corresponds to the residual/wilting moisture and S = 1 corresponds to the saturation extreme.
+with `Gsc = 0.0820` MJ/(m^2 min), `dr` the inverse relative Earth-Sun distance, `delta` solar declination, `omega_s` sunset hour angle, and `phi` the station latitude in radians.
 
 ### Irrigation Detection
 
@@ -99,6 +80,10 @@ I(t) = max(0, P_SM2RAIN(t) - P_ref(t))
 Events below a minimum threshold (default 2.5 mm/day) are discarded as noise.
 
 ---
+## Data products used
+- Copernicus AgERA5- for day time mean temperature
+- NASA IMERG Final Run V7 - for precipitation values
+- NASA SMAP - SPL3SMP_E - for SM values 
 
 ## Calibration Methodology
 
@@ -138,19 +123,12 @@ The best parameter set for each class is the one that achieves the lowest loss v
 | Drainage shape parameter | lambda | - | [3.0, 15.0] | Controls nonlinearity of drainage term |
 | Crop coefficient | Kc | - | [0.001, 25] | Scales PET to actual ET |
 
-### Fixed Parameters
-
-| Parameter | Symbol | Units | Default | Description |
-|-----------|--------|-------|---------|-------------|
-| Exponential filter constant | T | days | 5.0 | Controls root-zone SM estimation depth |
-| Irrigation detection threshold | - | mm/day | 2.5 | Minimum detectable irrigation event |
-
 ---
 
 
 ## Calibration Results
 
-Best-parameter results for the Ludhiana study region (per-point strategy, KGE objective, 5-day aggregated windows, T = 5 days). Source: `calibration/per_class_parameters_ludhiana_correct_temp/all_classes_best_parameters.csv`.
+Best-parameter results for the Ludhiana study region (per-point strategy, KGE objective, 5-day aggregated windows, T = 5 days).
 
 | Class | Z* (mm) | Ks (mm/day) | lambda | Kc | Best KGE | Best RMSE (mm/day) | Mean KGE | Mean RMSE (mm/day) |
 |-------|---------|-------------|--------|----|----------|--------------------|----------|--------------------|
@@ -162,7 +140,7 @@ Best-parameter results for the Ludhiana study region (per-point strategy, KGE ob
 
 **Notes:**
 - "Best" refers to the single grid point within each class that achieved the highest KGE.
-- "Mean" is the arithmetic mean across all 25 grid points per class.
+- "Mean" is the arithmetic mean across all ~25 grid points per class.
 - Kc = 0 across all classes indicates that the Hargreaves PET term does not improve the KGE objective relative to the SM-only water balance terms for this dataset.
 - Class 5 (highest rainfall regime) achieves the highest KGE (0.498), consistent with larger soil moisture responses providing greater discriminating power.
 
